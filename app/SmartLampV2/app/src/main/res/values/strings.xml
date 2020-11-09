@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">Smart Lamp V1</string>
+
+    <string name="label_home">Дом</string>
+    <string name="label_graph">График</string>
+    <string name="label_control">Управление</string>
+    <string name="label_settings">Настройки</string>
+
+    <string name="label_address">Адрес</string>
+    <string name="label_port">Порт</string>
+    <string name="label_name">Имя</string>
+    <string name="label_password">Пароль</string>
+    <string name="label_DT">Темная тема</string>
+    <string name="label_language">Выбор языка</string>
+    <string name="label_BG_mode">Работать в фоновом режиме</string>
+    <string name="label_sound">Звук</string>
+    <string name="label_light">Свет</string>
+    <string name="label_move">Движение</string>
+    <string name="label_sensors">Показания с датчиков</string>
+    <string name="label_signaling">Сигнализация</string>
+    <string name="label_weather">Прогноз погоды</string>
+    <string name="label_weather_prog">Погода:</string>
+
+
+    <string name="label_address_en">Address</string>
+    <string name="label_port_en">Port</string>
+    <string name="label_name_en">Username</string>
+    <string name="label_password_en">Password</string>
+    <string name="label_DT_en">Dark Theme</string>
+    <string name="label_language_en">Select language</string>
+    <string name="label_BG_mode_en">Background work</string>
+    <string name="label_sound_en">Sound</string>
+    <string name="label_light_en">Light</string>
+    <string name="label_move_en">Move</string>
+    <string name="label_sensors_en">Readings from sensors</string>
+    <string name="label_signaling_en">Signalization</string>
+    <string name="label_weather_en">Weather forecast</string>
+    <string name="label_weather_prog_en">Weather:</string>
+
+    <string name="WIFI">WIFI</string>
+    <string name="BT">BT</string>
+    <string name="REC">REC</string>
+</resources>

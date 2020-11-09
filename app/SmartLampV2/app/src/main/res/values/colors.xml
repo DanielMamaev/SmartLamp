@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorPrimary">#2990FF</color>
+    <color name="colorAccent">#2990FF</color>
+
+    <color name="bg_activity_black">#000000</color>
+    <color name="bg_layout_black">#1C1C1C</color>
+    <color name="bg_layout_grey">#F7F7F7</color>
+    <color name="openDialog">#FF0000</color>
+
+
+</resources>
