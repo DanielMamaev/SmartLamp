@@ -9,7 +9,7 @@
 #define NUM_LEDS 16        // количество светодиодов (данная версия поддерживает до 410 штук)
 #define CURRENT_LIMIT 950  // лимит по току в МИЛЛИАМПЕРАХ, автоматически управляет яркостью (пожалей свой блок питания!) 0 - выключить лимит
 #define NUM_STRIPS 4        // количество отрезков ленты (в параллели)
-int BRIGHTNESS = 50;    // яркость по умолчанию (0 - 255)
+int BRIGHTNESS = 255;    // яркость по умолчанию (0 - 255)
 
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
@@ -97,10 +97,7 @@ void callback(const MQTT::Publish& pub)
     if (mov == 8)sign_check = true;
     if (mov == 9)sign_check = false;
     if (mov == 100) fullLowPass();
-    if (mov == 0) {
-      wifiManager.resetSettings();
-      ESP.restart();
-    }
+    if (mov == 0) res_wifi();
   }
 }
 WiFiClient wclient;
@@ -299,20 +296,58 @@ boolean mqtt_run;
 void setup() {
   Serial.begin(115200);
   mySerial.begin(9600);
-
   EEPROM.begin(512);
-  wifiManager.autoConnect("Lamp");
-  //wifiManager.resetSettings();
-
-
-  httpUpdater.setup(&HttpServer, OTAPATH, OTAUSER, OTAPASSWORD);
-  HttpServer.begin();
 
   FastLED.addLeds<WS2811, LED_PIN, GRB>(leds, NUM_LEDS).setCorrection( TypicalLEDStrip );
   if (CURRENT_LIMIT > 0) FastLED.setMaxPowerInVoltsAndMilliamps(5, CURRENT_LIMIT / NUM_STRIPS);
   FastLED.setBrightness(BRIGHTNESS);
   FastLED.show();
   FastLED.clear();
+
+
+  String ssid_w = WiFi.SSID();
+  String pass_w = WiFi.psk();
+  Serial.println();
+  Serial.println(ssid_w);
+  Serial.println(pass_w);
+
+  if (!((ssid_w.equals("")) && (pass_w.equals("")))) {
+    WiFi.begin(ssid_w, pass_w);
+    if (WiFi.waitForConnectResult() != WL_CONNECTED) {
+      Serial.println("Wi-Fi connection failed");
+      leds[NUM_LEDS - 1] = CHSV(HUE_RED, 255, 255);
+      FastLED.show();
+      delay(2000);
+    }
+    else {
+      Serial.println("Wi-Fi connection success");
+      leds[NUM_LEDS - 1] = CHSV(HUE_GREEN, 255, 255);
+      FastLED.show();
+      delay(2000);
+    }
+  }
+  else {
+    if (1 == EEPROM.read(300)) {
+      leds[NUM_LEDS - 1] = CHSV(HUE_YELLOW, 255, 255);
+      FastLED.show();
+      delay(2000);
+      EEPROM.write(300, 0);
+      EEPROM.commit();
+      wifiManager.autoConnect("SmartLamp");
+    }
+  }
+  FastLED.clear();
+  FastLED.show();
+
+
+
+  //wifiManager.resetSettings();
+
+
+  httpUpdater.setup(&HttpServer, OTAPATH, OTAUSER, OTAPASSWORD);
+  HttpServer.begin();
+
+
 
   pinMode(CLOCK, OUTPUT);
   pinMode(RESET, OUTPUT);
@@ -441,4 +476,13 @@ void indi_mode() {
     }
   }
   indi_mode_bool = false;
+}
+
+
+void res_wifi() {
+  EEPROM.write(300, 1);
+  EEPROM.commit();
+  delay(100);
+  wifiManager.resetSettings();
+  ESP.restart();
 }

@@ -61,10 +61,14 @@ void Bluetooth() {
 
     if (byteData == 101) {
       client.disconnect();
-      WiFi.mode(WIFI_OFF);//WIFI_AP, WIFI_STA, WIFI_AP_STA, WIFI_OFF
+      WiFi.disconnect();//WIFI_AP, WIFI_STA, WIFI_AP_STA, WIFI_OFF
+      wifiManager.resetSettings();
+      delay(100);
+      EEPROM.write(300, 0);
+      EEPROM.commit();
     }
     if (byteData == 102) {
-      wifiManager.autoConnect("Lamp");
+      res_wifi();
     }
 
     Serial.println(strData);               // вывести
@@ -106,7 +110,7 @@ void name_mqtt_server() {
 
 
 
-  EEPROM.begin(512);
+  //EEPROM.begin(512);
 
   if (mqtt != "") {
     EEPROM.write(200, mqtt.length());
@@ -131,7 +135,7 @@ void name_mqtt_server() {
       EEPROM.write(i + 96, buf[i]);
 
     EEPROM.commit();
-    EEPROM.end();
+    //EEPROM.end();
   }
   reset_esp = true;
 }

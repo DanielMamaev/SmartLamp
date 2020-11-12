@@ -24,9 +24,9 @@ void touch_v() {
    
       wasStep = true;
       if (brightDirection) {
-        BRIGHTNESS += 2;
+        BRIGHTNESS += 4;
       } else {
-        BRIGHTNESS -= 2;
+        BRIGHTNESS -= 4;
       }
       BRIGHTNESS = constrain(BRIGHTNESS, MIN_BRIGHTNESS, 255);
       FastLED.setBrightness(BRIGHTNESS);

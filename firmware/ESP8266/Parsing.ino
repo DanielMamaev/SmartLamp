@@ -34,8 +34,8 @@ void parsing_nano() {
     recievedFlag = false;
     /*for (byte i = 0; i < PARSE_AMOUNT; i++) {  // выводим элементы массива
       Serial.print(intData[i]); Serial.print(" ");
-    }
-    Serial.println();*/
+      }
+      Serial.println();*/
     t = intData[0];
     h = intData[1];
     P = intData[2];
@@ -64,8 +64,9 @@ void parsing_nano() {
         break;
       case 9:
         intData[5] = 0;
-        wifiManager.autoConnect("Lamp");
-        check_mqtt();
+        res_wifi();
+
+        //check_mqtt();
         break;
       case 10: auto_play_on_off = !auto_play_on_off;
         break;
